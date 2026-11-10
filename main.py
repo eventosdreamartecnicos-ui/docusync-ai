@@ -1,11 +1,13 @@
+import os
 from fastapi import FastAPI, Form
-from fastapi.responses import HTMLResponse
 from openai import OpenAI
 
 app = FastAPI()
-client = OpenAI(api_key="")
 
-@app.get("/", response_class=HTMLResponse)
+# Inicializar cliente de OpenAI de forma segura
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+@app.get("/")
 def leer_index():
     return open("index.html", "r", encoding="utf-8").read()
 

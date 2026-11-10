@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocuSync AI - Validador Aduanero</title>
+    <title>DocuSync AI - Plataforma Integral de Aduanas</title>
     <style>
         :root {
             --primary: #6366f1;
@@ -29,12 +29,12 @@
 
         .container {
             width: 100%;
-            max-width: 680px;
+            max-width: 760px;
             background: var(--card-bg);
             backdrop-filter: blur(10px);
-            padding: 48px;
+            padding: 40px;
             border-radius: 24px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -47,67 +47,53 @@
             padding: 6px 12px;
             border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             margin-bottom: 12px;
         }
 
         .header-box {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         h1 {
             color: var(--text-main);
             margin: 0 0 8px 0;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 800;
-            letter-spacing: -0.5px;
         }
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 15px;
+            font-size: 14px;
             margin: 0;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 6px;
+            font-size: 13px;
             color: #334155;
         }
 
-        select, textarea {
+        select, input[type="number"], textarea, input[type="file"] {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 15px;
+            border-radius: 10px;
+            font-size: 14px;
             font-family: inherit;
             box-sizing: border-box;
             background: #f8fafc;
-            transition: all 0.2s ease;
-        }
-
-        select {
-            cursor: pointer;
         }
 
         textarea {
-            height: 130px;
+            height: 100px;
             resize: vertical;
-        }
-
-        select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         }
 
         button {
@@ -115,95 +101,164 @@
             background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             color: white;
             border: none;
-            padding: 16px;
-            font-size: 16px;
+            padding: 14px;
+            font-size: 15px;
             font-weight: 600;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
-            transition: all 0.2s ease;
+            margin-top: 5px;
+            transition: all 0.2s;
         }
 
         button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.5);
-        }
-
-        button:active {
-            transform: translateY(0);
         }
 
         .btn-stripe {
             background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%) !important;
-            box-shadow: 0 4px 12px rgba(99, 91, 255, 0.4) !important;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        .btn-stripe:hover {
-            box-shadow: 0 6px 16px rgba(99, 91, 255, 0.5) !important;
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: #e2e8f0;
+            color: #475569;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            width: auto;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         #resultado {
-            margin-top: 28px;
-            padding: 24px;
+            margin-top: 20px;
+            padding: 20px;
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-left: 5px solid var(--primary);
-            border-radius: 12px;
-            font-size: 15px;
-            line-height: 1.7;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.6;
             display: none;
             white-space: pre-wrap;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
         #btnDescargar {
             background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
             display: none;
-            margin-top: 14px;
+            margin-top: 10px;
         }
 
-        #btnDescargar:hover {
-            box-shadow: 0 6px 16px rgba(5, 150, 105, 0.5);
+        .history-box {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+            background: #fff;
+        }
+
+        .history-item {
+            font-size: 12px;
+            padding: 6px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+        }
+        .history-item:hover {
+            background: #f8fafc;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header-box">
-            <span class="badge">Inteligencia Aduanera</span>
+            <span class="badge">Inteligencia Aduanera Avanzada</span>
             <h1>DocuSync AI</h1>
-            <p class="subtitle">Clasificación automática de códigos arancelarios mediante IA</p>
+            <p class="subtitle">Clasificación, Costos (Landed Cost), Documentos e Historial Inteligente</p>
         </div>
         
-        <!-- Botón de Pago con Stripe visible encima del selector -->
-        <button class="btn-stripe" onclick="pagarStripe()">💳 Pagar 5€ con Stripe</button>
+        <button class="btn-stripe" onclick="pagarStripe()">💳 Comprar Créditos / Pagar con Stripe</button>
 
-        <div class="form-group">
-            <label for="pais">País de Destino (Importación):</label>
-            <select id="pais">
-                <option value="España / UE">España / Unión Europea</option>
-                <option value="México">México</option>
-                <option value="Estados Unidos">Estados Unidos</option>
-                <option value="Canadá">Canadá</option>
-                <option value="Colombia">Colombia</option>
-                <option value="Argentina">Argentina</option>
-                <option value="Chile">Chile</option>
-                <option value="Perú">Perú</option>
-                <option value="Brasil">Brasil</option>
-                <option value="Reino Unido">Reino Unido</option>
-                <option value="China">China</option>
-                <option value="Japón">Japón</option>
-            </select>
+        <!-- Pestañas de Navegación de Funciones -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="cambiarTab(event, 'tab-manual')">✍️ Consulta Manual & CIF</button>
+            <button class="tab-btn" onclick="cambiarTab(event, 'tab-docs')">📄 Subir Factura / Packing List</button>
+            <button class="tab-btn" onclick="cambiarTab(event, 'tab-historial')">🕒 Historial DB</button>
         </div>
 
-        <div class="form-group">
-            <label for="desc">Descripción detallada del producto:</label>
-            <textarea id="desc" placeholder="Ej: Zapatos de cuero con suela de goma para trekking, impermeables..."></textarea>
+        <!-- PESTAÑA 1: CONSULTA MANUAL + VALOR CIF -->
+        <div id="tab-manual" class="tab-content active">
+            <div class="form-group">
+                <label for="pais">País de Destino (Importación):</label>
+                <select id="pais">
+                    <option value="España / UE">España / Unión Europea</option>
+                    <option value="México">México</option>
+                    <option value="Estados Unidos">Estados Unidos</option>
+                    <option value="Canadá">Canadá</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Perú">Perú</option>
+                    <option value="Brasil">Brasil</option>
+                    <option value="Reino Unido">Reino Unido</option>
+                    <option value="China">China</option>
+                    <option value="Japón">Japón</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="valor_cif">Valor CIF de la Mercancía (€ / Moneda Local):</label>
+                <input type="number" id="valor_cif" placeholder="Ej: 1500" value="0">
+            </div>
+
+            <div class="form-group">
+                <label for="desc">Descripción detallada del producto:</label>
+                <textarea id="desc" placeholder="Ej: Zapatos de cuero con suela de goma para trekking, impermeables..."></textarea>
+            </div>
+            
+            <button onclick="clasificar()">Analizar Código HS y Landed Cost</button>
         </div>
-        
-        <button onclick="clasificar()">Analizar y Validar Código HS</button>
+
+        <!-- PESTAÑA 2: GESTOR DE DOCUMENTOS COMERCIALES -->
+        <div id="tab-docs" class="tab-content">
+            <div class="form-group">
+                <label for="doc_file">Subir Factura Comercial o Packing List (Imagen o PDF):</label>
+                <input type="file" id="doc_file" accept=".pdf,image/*">
+            </div>
+            <button onclick="analizarDocumento()">Analizar Documento Completo con IA</button>
+        </div>
+
+        <!-- PESTAÑA 3: HISTORIAL DE CONSULTAS -->
+        <div id="tab-historial" class="tab-content">
+            <label>Últimas consultas guardadas en Base de Datos:</label>
+            <button onclick="cargarHistorial()" style="background:#475569; margin-bottom:10px; padding:8px;">🔄 Actualizar Lista</button>
+            <div id="lista-historial" class="history-box">
+                <span style="font-size:12px; color:#64748b;">Cargando historial...</span>
+            </div>
+        </div>
         
         <div id="resultado"></div>
         <button id="btnDescargar" onclick="descargarInforme()">📥 Descargar Informe Oficial (TXT)</button>
@@ -214,65 +269,121 @@
         let ultimaDescripcion = "";
         let ultimoPais = "";
 
+        function cambiarTab(evt, tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+            if(tabName === 'tab-historial') cargarHistorial();
+        }
+
         async function pagarStripe() {
             try {
                 const response = await fetch('/crear-sesion-pago', { method: 'POST' });
                 const data = await response.json();
-                if (data.url) {
-                    window.location.href = data.url;
-                } else {
-                    alert('Error al conectar con la pasarela de pagos.');
-                }
-            } catch (error) {
-                alert('Hubo un error al procesar el pago.');
-            }
+                if (data.url) window.location.href = data.url;
+                else alert('Error al conectar con pasarela.');
+            } catch (e) { alert('Error de pago'); }
         }
 
         async function clasificar() {
             ultimaDescripcion = document.getElementById('desc').value;
             ultimoPais = document.getElementById('pais').value;
+            const valorCif = document.getElementById('valor_cif').value;
             const resDiv = document.getElementById('resultado');
             const btnDescargar = document.getElementById('btnDescargar');
             
             if (!ultimaDescripcion.trim()) {
-                alert('Por favor, escribe una descripción del producto.');
+                alert('Escribe una descripción del producto.');
                 return;
             }
 
             resDiv.style.display = 'block';
-            resDiv.innerText = 'Analizando especificaciones y consultando base arancelaria... ⏳';
+            resDiv.innerText = 'Calculando aranceles, Landed Cost y restricciones... ⏳';
             btnDescargar.style.display = 'none';
 
             try {
                 const formData = new FormData();
                 formData.append('descripcion', ultimaDescripcion);
                 formData.append('pais', ultimoPais);
+                formData.append('valor_cif', valorCif);
 
-                const response = await fetch('/clasificar-hs', {
-                    method: 'POST',
-                    body: formData
-                });
-
+                const response = await fetch('/clasificar-hs', { method: 'POST', body: formData });
                 const data = await response.json();
                 ultimoResultado = data.resultado;
                 resDiv.innerText = ultimoResultado;
                 btnDescargar.style.display = 'block';
             } catch (error) {
-                resDiv.innerText = 'Hubo un error al procesar la solicitud con el servidor.';
+                resDiv.innerText = 'Error al procesar la solicitud.';
             }
+        }
+
+        async function analizarDocumento() {
+            const fileInput = document.getElementById('doc_file');
+            const resDiv = document.getElementById('resultado');
+            const btnDescargar = document.getElementById('btnDescargar');
+
+            if(fileInput.files.length === 0) {
+                alert('Selecciona un archivo PDF o imagen.');
+                return;
+            }
+
+            resDiv.style.display = 'block';
+            resDiv.innerText = 'Leyendo documento y extrayendo inventario aduanero con IA... 📄⏳';
+            btnDescargar.style.display = 'none';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('pais', document.getElementById('pais').value);
+
+                const response = await fetch('/analizar-documento', { method: 'POST', body: formData });
+                const data = await response.json();
+                ultimoResultado = data.resultado;
+                ultimaDescripcion = "Análisis masivo por documento comercial";
+                resDiv.innerText = ultimoResultado;
+                btnDescargar.style.display = 'block';
+            } catch(e) {
+                resDiv.innerText = 'Error al leer el documento comercial.';
+            }
+        }
+
+        async function cargarHistorial() {
+            const listaDiv = document.getElementById('lista-historial');
+            try {
+                const res = await fetch('/obtener-historial');
+                const data = await res.json();
+                if(data.length === 0) {
+                    listaDiv.innerHTML = '<span style="font-size:12px; color:#64748b;">No hay consultas previas.</span>';
+                    return;
+                }
+                listaDiv.innerHTML = data.map(item => `
+                    <div class="history-item" onclick="verHistorial('${encodeURIComponent(item.resultado)}', '${encodeURIComponent(item.producto)}')">
+                        <strong>[${item.fecha}] ${item.pais}</strong>: ${item.producto.substring(0, 45)}...
+                    </div>
+                `).join('');
+            } catch(e) {
+                listaDiv.innerHTML = '<span style="font-size:12px; color:red;">Error al cargar historial.</span>';
+            }
+        }
+
+        function verHistorial(res, prod) {
+            ultimoResultado = decodeURIComponent(res);
+            ultimaDescripcion = decodeURIComponent(prod);
+            const resDiv = document.getElementById('resultado');
+            resDiv.style.display = 'block';
+            resDiv.innerText = ultimoResultado;
+            document.getElementById('btnDescargar').style.display = 'block';
+            window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
         }
 
         async function descargarInforme() {
             const formData = new FormData();
             formData.append('descripcion', ultimaDescripcion);
-            formData.append('pais', ultimoPais);
+            formData.append('pais', document.getElementById('pais').value);
             formData.append('resultado', ultimoResultado);
 
-            const response = await fetch('/exportar-txt', {
-                method: 'POST',
-                body: formData
-            });
-
+            const response = await fetch('/exportar-txt', { method: 'POST', body: formData });
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');

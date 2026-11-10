@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuSync AI - Validador Aduanero</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 50px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        textarea { width: 100%; height: 100px; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; resize: none; }
+        button { background-color: #2980b9; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 4px; font-size: 16px; cursor: pointer; margin-bottom: 10px; }
+        button:hover { background-color: #2471a3; }
+        .btn-stripe { background-color: #6772e5; }
+        .btn-stripe:hover { background-color: #5469d4; }
+        #resultado { margin-top: 20px; background: #eef2f3; padding: 15px; border-radius: 4px; white-space: pre-wrap; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DocuSync AI</h1>
+        <p style="text-align: center; color: #666;">Validación automática de códigos arancelarios mediante IA</p>
+        
+        <!-- Botón de pago con Stripe -->
+        <button class="btn-stripe" onclick="pagarConStripe()">Pagar 5€ con Stripe</button>
+
+        <label for="desc">Describe tu producto:</label>
+        <textarea id="desc" placeholder="Ej: Zapatos de cuero con suela de goma..."></textarea>
+        
+        <button onclick="clasificar()">Validar Código Arancelario</button>
+        
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        // Función para conectar con la pasarela de pagos de Stripe
+        async function pagarConStripe() {
+            try {
+                const response = await fetch('/crear-sesion-pago', { method: 'POST' });
+                const data = await response.json();
+                if(data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert('Error al conectar con la pasarela de pagos.');
+                }
+            } catch (error) {
+                alert('Hubo un error de conexión con el servidor de pagos.');
+            }
+        }
+
+        // Función existente para clasificar el producto con la IA
+        async function clasificar() {
+            const descripcion = document.getElementById('desc').value;
+            const resDiv = document.getElementById('resultado');
+            if(!descripcion) { alert('Por favor, escribe una descripción'); return; }
+            
+            resDiv.style.display = 'block';
+            resDiv.innerText = 'Analizando con IA...';
+
+            const formData = new FormData();
+            formData.append('descripcion', descripcion);
+
+            try {
+                const response = await fetch('/clasificar-hs', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                resDiv.innerText = data.resultado;
+            } catch (error) {
+                resDiv.innerText = 'Hubo un error al procesar la solicitud.';
+            }
+        }
+    </script>
+</body>
+</html>

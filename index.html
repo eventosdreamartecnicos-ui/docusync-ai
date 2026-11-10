@@ -6,9 +6,9 @@
     <title>DocuSync AI - Enterprise Customs & Trade Compliance</title>
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg-main: #f1f5f9;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-main: #f8fafc;
             --sidebar-bg: #0f172a;
             --card-bg: #ffffff;
             --text-main: #0f172a;
@@ -26,7 +26,7 @@
             min-height: 100vh;
         }
 
-        /* SIDEBAR DE NAVEGACIÓN */
+        /* BARRA LATERAL ESTILO SAAS (OSCURA) */
         .sidebar {
             width: 260px;
             background: var(--sidebar-bg);
@@ -34,18 +34,32 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 24px;
+            padding: 24px 16px;
         }
 
         .sidebar-brand {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 40px;
-            color: #818cf8;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-brand img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .sidebar-brand span {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: white;
         }
 
         .sidebar-menu {
@@ -59,31 +73,32 @@
             padding: 12px 16px;
             border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 6px;
+            font-size: 13px;
             font-weight: 500;
             color: #94a3b8;
             transition: all 0.2s;
         }
 
         .sidebar-menu li:hover, .sidebar-menu li.active {
-            background: rgba(255, 255, 255, 0.08);
+            background: #1e293b;
             color: white;
         }
 
         .sidebar-footer {
-            font-size: 12px;
+            font-size: 11px;
             color: #64748b;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 14px;
+            text-align: center;
         }
 
         /* CONTENIDO PRINCIPAL */
         .main-content {
             flex-grow: 1;
-            padding: 40px;
+            padding: 30px 40px;
             overflow-y: auto;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -91,62 +106,116 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
         }
 
         .top-bar h1 {
             margin: 0;
-            font-size: 26px;
-            font-weight: 800;
-        }
-
-        .badge-pro {
-            background: #e0e7ff;
-            color: #4338ca;
-            font-size: 11px;
+            font-size: 20px;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            text-transform: uppercase;
         }
 
-        /* BANNER VISUAL EMPRESARIAL */
-        .hero-banner {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-            border-radius: 16px;
-            padding: 30px;
-            color: white;
-            margin-bottom: 30px;
+        .user-profile-badge {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
         }
 
-        .hero-text h2 { margin: 0 0 8px 0; font-size: 22px; }
-        .hero-text p { margin: 0; color: #c7d2fe; font-size: 14px; opacity: 0.9; max-width: 500px; }
-        
-        .hero-stats {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            padding: 15px 25px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .hero-stats span { display: block; font-size: 24px; font-weight: 700; }
-        .hero-stats label { font-size: 11px; color: #a5b4fc; text-transform: uppercase; }
-
-        /* TARJETAS Y FORMULARIOS */
+        /* TARJETAS */
         .card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
             border: 1px solid var(--border-color);
             margin-bottom: 24px;
         }
 
+        /* ÁREA DE CARGA (DRAG & DROP) */
+        .upload-dropzone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 45px 20px;
+            text-align: center;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-dropzone:hover {
+            border-color: var(--primary);
+            background: #f1f5f9;
+        }
+
+        .upload-icon {
+            width: 50px;
+            height: 50px;
+            background: #e0f2fe;
+            color: #0284c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px auto;
+            font-size: 20px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .upload-subtext {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* SECCIÓN DE DOCUMENTOS RECIENTES */
+        .recent-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .recent-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 14px;
+            background: #ffffff;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .recent-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--success);
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        /* FORMULARIOS Y BOTONES */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -154,7 +223,7 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-group.full {
@@ -163,32 +232,25 @@
 
         label {
             display: block;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 6px;
             font-size: 13px;
-            color: #334155;
+            color: #475569;
         }
 
-        select, input[type="number"], textarea, input[type="file"] {
+        select, input[type="number"], textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             font-size: 14px;
             font-family: inherit;
             box-sizing: border-box;
-            background: #f8fafc;
-            transition: border-color 0.2s;
-        }
-
-        select:focus, input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: white;
+            background: #ffffff;
         }
 
         textarea {
-            height: 110px;
+            height: 100px;
             resize: vertical;
         }
 
@@ -196,23 +258,21 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 14px 20px;
-            font-size: 15px;
+            padding: 12px 20px;
+            font-size: 14px;
             font-weight: 600;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-            transition: all 0.2s;
+            transition: background 0.2s;
             width: 100%;
         }
 
         button:hover {
             background: var(--primary-hover);
-            transform: translateY(-1px);
         }
 
         .btn-stripe {
-            background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%);
+            background: #4f46e5;
             margin-bottom: 20px;
         }
 
@@ -220,14 +280,14 @@
         .tab-content.active { display: block; }
 
         #resultado {
-            margin-top: 24px;
-            padding: 24px;
+            margin-top: 20px;
+            padding: 20px;
             background: #f8fafc;
             border: 1px solid var(--border-color);
-            border-left: 5px solid var(--primary);
-            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
             font-size: 14px;
-            line-height: 1.7;
+            line-height: 1.6;
             display: none;
             white-space: pre-wrap;
         }
@@ -237,94 +297,96 @@
             display: none;
             margin-top: 15px;
         }
-
-        .history-box {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px;
-            background: #f8fafc;
-        }
-
-        .history-item {
-            padding: 10px;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            font-size: 13px;
-            background: white;
-            border-radius: 6px;
-            margin-bottom: 6px;
-        }
-        .history-item:hover {
-            background: #eef2ff;
-            border-color: #c7d2fe;
-        }
     </style>
 </head>
 <body>
 
-    <!-- BARRA LATERAL ESTILO SAAS ENTERPRISE -->
+    <!-- BARRA LATERAL (SIDEBAR) -->
     <div class="sidebar">
         <div>
+            <!-- LOGOTIPO OFICIAL INTEGRADO -->
             <div class="sidebar-brand">
-                🌐 DocuSync AI
+                <img src="/logo.png" alt="DocuSync AI Logo">
+                <span>DocuSync AI</span>
             </div>
             <ul class="sidebar-menu">
-                <li class="active" onclick="cambiarSeccion(event, 'sec-clasificador')">📦 Clasificador & Landed Cost</li>
-                <li onclick="cambiarSeccion(event, 'sec-documentos')">📄 Gestor de Documentos IA</li>
-                <li onclick="cambiarSeccion(event, 'sec-historial')">🕒 Historial de Consultas DB</li>
+                <li onclick="cambiarSeccion(event, 'sec-clasificador')">📊 Dashboard</li>
+                <li class="active" onclick="cambiarSeccion(event, 'sec-documentos')">📁 Document Upload</li>
+                <li onclick="cambiarSeccion(event, 'sec-clasificador')">⚡ AI Processing</li>
+                <li onclick="cambiarSeccion(event, 'sec-clasificador')">🛡️ Compliance Check</li>
+                <li onclick="cambiarSeccion(event, 'sec-historial')">📊 Export & History</li>
+                <li onclick="cambiarSeccion(event, 'sec-clasificador')">⚙️ Settings</li>
             </ul>
         </div>
         <div class="sidebar-footer">
             <span>Enterprise Suite v2.5</span><br>
-            <span style="color:#34d399;">● Conectado a Servidor Aduanero</span>
+            <span style="color:#34d399;">● Online</span>
         </div>
     </div>
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="main-content">
         <div class="top-bar">
-            <div>
-                <h1>Panel de Inteligencia Comercial</h1>
-                <span class="subtitle" style="color:var(--text-muted);">Automatización arancelaria, cálculo de costos e inspección regulatoria</span>
-            </div>
-            <span class="badge-pro">Enterprise Edition</span>
-        </div>
-
-        <!-- BANNER VISUAL PROFESIONAL -->
-        <div class="hero-banner">
-            <div class="hero-text">
-                <h2>Gestión de Aduanas Global en Tiempo Real</h2>
-                <p>Valida normativas de importación, calcula aranceles CIF y audita documentos comerciales con modelos de visión por inteligencia artificial.</p>
-            </div>
-            <div class="hero-stats">
-                <span>99.4%</span>
-                <label>Precisión IA</label>
+            <h1 id="page-title">Document Upload</h1>
+            <div class="user-profile-badge">
+                <span>🔔</span>
+                <span>👤 Dashboard</span>
             </div>
         </div>
 
         <button class="btn-stripe" onclick="pagarStripe()">💳 Recargar Créditos de API con Stripe</button>
 
+        <!-- SECCIÓN 2: DOCUMENT UPLOAD (Vista por defecto idéntica a la imagen) -->
+        <div id="sec-documentos" class="card tab-content active">
+            <div class="upload-dropzone" onclick="document.getElementById('doc_file').click()">
+                <div class="upload-icon">⬆</div>
+                <div class="upload-text">Drag & drop files or browse</div>
+                <div class="upload-subtext">(PDF, Invoice, Packing List)</div>
+                <input type="file" id="doc_file" accept=".pdf,image/*" style="display: none;" onchange="actualizarNombreArchivo(this)">
+            </div>
+            <div id="file-chosen-name" style="margin-top: 10px; font-size: 13px; color: var(--primary); font-weight: 500; text-align: center;"></div>
+            
+            <div style="margin-top: 20px;">
+                <label for="pais_doc">País de Destino (Aduanas):</label>
+                <select id="pais_doc" style="margin-bottom: 15px;">
+                    <option value="España / UE">España / Unión Europea</option>
+                    <option value="México">México</option>
+                    <option value="Estados Unidos">Estados Unidos</option>
+                    <option value="Reino Unido">Reino Unido</option>
+                </select>
+                <button onclick="analizarDocumento()">Analizar Inventario por Visión IA</button>
+            </div>
+
+            <!-- TARJETAS DE DOCUMENTOS RECIENTES (Simulando la vista de la pantalla) -->
+            <div style="margin-top: 30px;">
+                <div class="recent-section-title">Recent Documents</div>
+                <div class="recent-grid">
+                    <div class="recent-card">
+                        <div class="recent-card-header"><span>🔄 Processing</span><span>⊙</span></div>
+                        <span style="color:var(--text-muted); font-size:12px;">commercial_invoice_01.pdf</span>
+                    </div>
+                    <div class="recent-card">
+                        <div class="recent-card-header"><span>✓ Verified</span><span>⊙</span></div>
+                        <span style="color:var(--text-muted); font-size:12px;">packing_list_mx.pdf</span>
+                    </div>
+                    <div class="recent-card">
+                        <div class="recent-card-header"><span>✓ Verified</span><span>⊙</span></div>
+                        <span style="color:var(--text-muted); font-size:12px;">customs_declaration_eu.pdf</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SECCIÓN 1: CLASIFICADOR & LANDED COST -->
-        <div id="sec-clasificador" class="card tab-content active">
-            <h3 style="margin-top:0; margin-bottom:20px; font-size:18px;">🔍 Clasificación HS & Estimación de Costos (Landed Cost)</h3>
+        <div id="sec-clasificador" class="card tab-content">
+            <h3 style="margin-top:0; margin-bottom:20px; font-size:16px;">🔍 Clasificación HS & Estimación de Costos (Landed Cost)</h3>
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="pais">País de Destino (Importación):</label>
+                    <label for="pais">País de Destino:</label>
                     <select id="pais">
                         <option value="España / UE">España / Unión Europea</option>
                         <option value="México">México</option>
                         <option value="Estados Unidos">Estados Unidos</option>
-                        <option value="Canadá">Canadá</option>
-                        <option value="Colombia">Colombia</option>
-                        <option value="Argentina">Argentina</option>
-                        <option value="Chile">Chile</option>
-                        <option value="Perú">Perú</option>
-                        <option value="Brasil">Brasil</option>
-                        <option value="Reino Unido">Reino Unido</option>
-                        <option value="China">China</option>
-                        <option value="Japón">Japón</option>
                     </select>
                 </div>
 
@@ -335,29 +397,20 @@
 
                 <div class="form-group full">
                     <label for="desc">Descripción detallada del producto:</label>
-                    <textarea id="desc" placeholder="Ej: Zapatos de seguridad con puntera de acero, suela anti-deslizante y revestimiento de cuero..."></textarea>
+                    <textarea id="desc" placeholder="Ej: Zapatos de seguridad con puntera de acero..."></textarea>
                 </div>
             </div>
             <button onclick="clasificar()">Ejecutar Análisis y Auditoría Aduanera</button>
         </div>
 
-        <!-- SECCIÓN 2: GESTOR DE DOCUMENTOS -->
-        <div id="sec-documentos" class="card tab-content">
-            <h3 style="margin-top:0; margin-bottom:20px; font-size:18px;">📄 Auditoría de Factura Comercial o Packing List</h3>
-            <div class="form-group">
-                <label for="doc_file">Subir documento comercial (PDF o Imagen de alta resolución):</label>
-                <input type="file" id="doc_file" accept=".pdf,image/*">
-            </div>
-            <p style="font-size:13px; color:var(--text-muted);">La IA procesará el documento íntegro, extraerá las líneas de productos y evaluará los códigos arancelarios masivos.</p>
-            <button onclick="analizarDocumento()">Analizar Inventario por Visión IA</button>
-        </div>
-
         <!-- SECCIÓN 3: HISTORIAL DB -->
         <div id="sec-historial" class="card tab-content">
-            <h3 style="margin-top:0; margin-bottom:15px; font-size:18px;">🕒 Registro Histórico de Consultas</h3>
-            <button onclick="cargarHistorial()" style="background:#475569; width:auto; padding:8px 16px; margin-bottom:15px; font-size:13px;">🔄 Actualizar Registros</button>
-            <div id="lista-historial" class="history-box">
-                <span style="font-size:13px; color:var(--text-muted);">Cargando historial de la base de datos...</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <span class="recent-section-title" style="margin:0;">Database History & Audit Logs</span>
+                <button onclick="cargarHistorial()" style="background:#475569; width:auto; padding:6px 12px; font-size:12px;">🔄 Actualizar</button>
+            </div>
+            <div id="lista-historial" style="border: 1px solid var(--border-color); border-radius: 8px; background: white; padding: 15px; font-size: 13px; color: var(--text-muted);">
+                Cargando registros...
             </div>
         </div>
 
@@ -376,7 +429,22 @@
             document.querySelectorAll('.sidebar-menu li').forEach(el => el.classList.remove('active'));
             document.getElementById(secId).classList.add('active');
             evt.currentTarget.classList.add('active');
+            
+            const titulos = {
+                'sec-documentos': 'Document Upload',
+                'sec-clasificador': 'Dashboard & Classification',
+                'sec-historial': 'Export & History'
+            };
+            document.getElementById('page-title').innerText = titulos[secId] || 'Panel Enterprise';
+            
             if(secId === 'sec-historial') cargarHistorial();
+        }
+
+        function actualizarNombreArchivo(input) {
+            const label = document.getElementById('file-chosen-name');
+            if(input.files && input.files[0]) {
+                label.innerText = "📄 Archivo seleccionado: " + input.files[0].name;
+            }
         }
 
         async function pagarStripe() {
@@ -437,7 +505,7 @@
             try {
                 const formData = new FormData();
                 formData.append('file', fileInput.files[0]);
-                formData.append('pais', document.getElementById('pais').value);
+                formData.append('pais', document.getElementById('pais_doc').value);
 
                 const response = await fetch('/analizar-documento', { method: 'POST', body: formData });
                 const data = await response.json();
@@ -456,16 +524,16 @@
                 const res = await fetch('/obtener-historial');
                 const data = await res.json();
                 if(data.length === 0) {
-                    listaDiv.innerHTML = '<span style="font-size:13px; color:var(--text-muted);">No hay consultas registradas.</span>';
+                    listaDiv.innerHTML = 'No hay consultas registradas.';
                     return;
                 }
                 listaDiv.innerHTML = data.map(item => `
-                    <div class="history-item" onclick="verHistorial('${encodeURIComponent(item.resultado)}', '${encodeURIComponent(item.producto)}')">
-                        <strong>[${item.fecha}] ${item.pais}</strong><br>${item.producto.substring(0, 75)}...
+                    <div style="padding: 10px; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="verHistorial('${encodeURIComponent(item.resultado)}', '${encodeURIComponent(item.producto)}')">
+                        <strong>[${item.fecha}]</strong> ${item.pais} - ${item.producto.substring(0, 60)}...
                     </div>
                 `).join('');
             } catch(e) {
-                listaDiv.innerHTML = '<span style="font-size:13px; color:red;">Error al conectar con la base de datos.</span>';
+                listaDiv.innerHTML = 'Error al conectar con la base de datos.';
             }
         }
 

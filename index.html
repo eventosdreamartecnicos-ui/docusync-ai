@@ -5,27 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocuSync AI - Validador Aduanero</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 50px; }
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; text-align: center; }
-        textarea { width: 100%; height: 100px; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; resize: none; }
-        button { background-color: #2980b9; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 4px; font-size: 16px; cursor: pointer; margin-bottom: 10px; }
-        button:hover { background-color: #2471a3; }
-        .btn-stripe { background-color: #6772e5; }
-        .btn-stripe:hover { background-color: #5469d4; }
-        #resultado { margin-top: 20px; background: #eef2f3; padding: 15px; border-radius: 4px; white-space: pre-wrap; display: none; }
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+        h1 {
+            text-align: center;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        button:active {
+            transform: scale(0.99);
+        }
+        #resultado {
+            margin-top: 24px;
+            padding: 20px;
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary);
+            border-radius: 6px;
+            font-size: 15px;
+            line-height: 1.6;
+            display: none;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>DocuSync AI</h1>
-        <p style="text-align: center; color: #666;">Validación automática de códigos arancelarios mediante IA</p>
+        <div class="subtitle">Validación inteligente y automatizada de códigos arancelarios</div>
         
-        <!-- Botón de pago con Stripe -->
-        <button class="btn-stripe" onclick="pagarConStripe()">Pagar 5€ con Stripe</button>
-
         <label for="desc">Describe tu producto:</label>
-        <textarea id="desc" placeholder="Ej: Zapatos de cuero con suela de goma..."></textarea>
+        <textarea id="desc" placeholder="Ej: Zapatos de cuero con suela de goma para trekking..."></textarea>
         
         <button onclick="clasificar()">Validar Código Arancelario</button>
         
@@ -33,42 +113,31 @@
     </div>
 
     <script>
-        // Función para conectar con la pasarela de pagos de Stripe
-        async function pagarConStripe() {
-            try {
-                const response = await fetch('/crear-sesion-pago', { method: 'POST' });
-                const data = await response.json();
-                if(data.url) {
-                    window.location.href = data.url;
-                } else {
-                    alert('Error al conectar con la pasarela de pagos.');
-                }
-            } catch (error) {
-                alert('Hubo un error de conexión con el servidor de pagos.');
-            }
-        }
-
-        // Función existente para clasificar el producto con la IA
         async function clasificar() {
             const descripcion = document.getElementById('desc').value;
             const resDiv = document.getElementById('resultado');
-            if(!descripcion) { alert('Por favor, escribe una descripción'); return; }
             
-            resDiv.style.display = 'block';
-            resDiv.innerText = 'Analizando con IA...';
+            if (!descripcion.trim()) {
+                alert('Por favor, escribe una descripción del producto.');
+                return;
+            }
 
-            const formData = new FormData();
-            formData.append('descripcion', descripcion);
+            resDiv.style.display = 'block';
+            resDiv.innerText = 'Analizando con IA y consultando aranceles... ⏳';
 
             try {
+                const formData = new FormData();
+                formData.append('descripcion', descripcion);
+
                 const response = await fetch('/clasificar-hs', {
                     method: 'POST',
                     body: formData
                 });
+
                 const data = await response.json();
                 resDiv.innerText = data.resultado;
             } catch (error) {
-                resDiv.innerText = 'Hubo un error al procesar la solicitud.';
+                resDiv.innerText = 'Hubo un error al procesar la solicitud con el servidor.';
             }
         }
     </script>

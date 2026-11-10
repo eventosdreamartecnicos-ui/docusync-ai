@@ -26,7 +26,7 @@
             min-height: 100vh;
         }
 
-        /* BARRA LATERAL ESTILO SAAS (OSCURA) */
+        /* BARRA LATERAL (SIDEBAR) */
         .sidebar {
             width: 260px;
             background: var(--sidebar-bg);
@@ -42,7 +42,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -51,15 +51,15 @@
             width: 55px;
             height: 55px;
             object-fit: contain;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             border-radius: 8px;
         }
 
         .sidebar-brand span {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            letter-spacing: -0.3px;
             color: white;
+            letter-spacing: -0.3px;
         }
 
         .sidebar-menu {
@@ -139,6 +139,62 @@
             border: 1px solid var(--border-color);
             margin-bottom: 24px;
         }
+
+        /* SELLO DE CONFIANZA Y SEGURIDAD */
+        .trust-banner {
+            display: flex;
+            gap: 15px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #166534;
+            align-items: center;
+        }
+
+        /* TABLA DE PRECIOS (PRICING TIERS) */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .pricing-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+            position: relative;
+        }
+
+        .pricing-card.featured::after {
+            content: "POPULAR B2B";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .price-title { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
+        .price-amount { font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
+        .price-features { list-style: none; padding: 0; margin: 0 0 20px 0; font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .price-features li::before { content: "✓ "; color: var(--success); font-weight: bold; }
 
         /* ÁREA DE CARGA (DRAG & DROP) */
         .upload-dropzone {
@@ -306,21 +362,19 @@
         <div>
             <!-- LOGOTIPO OFICIAL INTEGRADO -->
             <div class="sidebar-brand">
-                <img src="/logo.png" alt="DocuSync AI Logo">
+                <img src="/logo.png" alt="DocuSync AI Logo" onerror="this.src='/logo.jpeg'">
                 <span>DocuSync AI</span>
             </div>
             <ul class="sidebar-menu">
-                <li onclick="cambiarSeccion(event, 'sec-clasificador')">📊 Dashboard</li>
                 <li class="active" onclick="cambiarSeccion(event, 'sec-documentos')">📁 Document Upload</li>
-                <li onclick="cambiarSeccion(event, 'sec-clasificador')">⚡ AI Processing</li>
-                <li onclick="cambiarSeccion(event, 'sec-clasificador')">🛡️ Compliance Check</li>
+                <li onclick="cambiarSeccion(event, 'sec-clasificador')">📊 Clasificador & Landed Cost</li>
+                <li onclick="cambiarSeccion(event, 'sec-precios')">💳 Planes y Precios</li>
                 <li onclick="cambiarSeccion(event, 'sec-historial')">📊 Export & History</li>
-                <li onclick="cambiarSeccion(event, 'sec-clasificador')">⚙️ Settings</li>
             </ul>
         </div>
         <div class="sidebar-footer">
             <span>Enterprise Suite v2.5</span><br>
-            <span style="color:#34d399;">● Online</span>
+            <span style="color:#34d399;">● Online & Secure</span>
         </div>
     </div>
 
@@ -329,14 +383,18 @@
         <div class="top-bar">
             <h1 id="page-title">Document Upload</h1>
             <div class="user-profile-badge">
-                <span>🔔</span>
-                <span>👤 Dashboard</span>
+                <span>🔒 GDPR Compliant</span>
+                <span>👤 Enterprise Suite</span>
             </div>
         </div>
 
-        <button class="btn-stripe" onclick="pagarStripe()">💳 Recargar Créditos de API con Stripe</button>
+        <!-- SELLO DE CONFIANZA Y SEGURIDAD B2B -->
+        <div class="trust-banner">
+            <span>🛡️</span>
+            <div><strong>Infraestructura Segura y Encriptada:</strong> Todos los documentos comerciales, facturas y datos de importación se procesan bajo estrictos estándares de confidencialidad y normativas GDPR.</div>
+        </div>
 
-        <!-- SECCIÓN 2: DOCUMENT UPLOAD (Vista por defecto idéntica a la imagen) -->
+        <!-- SECCIÓN 2: DOCUMENT UPLOAD -->
         <div id="sec-documentos" class="card tab-content active">
             <div class="upload-dropzone" onclick="document.getElementById('doc_file').click()">
                 <div class="upload-icon">⬆</div>
@@ -357,7 +415,7 @@
                 <button onclick="analizarDocumento()">Analizar Inventario por Visión IA</button>
             </div>
 
-            <!-- TARJETAS DE DOCUMENTOS RECIENTES (Simulando la vista de la pantalla) -->
+            <!-- TARJETAS DE DOCUMENTOS RECIENTES -->
             <div style="margin-top: 30px;">
                 <div class="recent-section-title">Recent Documents</div>
                 <div class="recent-grid">
@@ -403,6 +461,42 @@
             <button onclick="clasificar()">Ejecutar Análisis y Auditoría Aduanera</button>
         </div>
 
+        <!-- SECCIÓN NUEVA: PLANES Y PRECIOS (PRICING TIERS) -->
+        <div id="sec-precios" class="card tab-content">
+            <h3 style="margin-top:0; margin-bottom:10px; font-size:18px;">💳 Planes de Suscripción y Facturación</h3>
+            <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Selecciona el plan que mejor se adapte al volumen de importaciones y auditorías documentales de tu empresa.</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div>
+                        <div class="price-title">Plan Básico PyME</div>
+                        <div class="price-amount">29€ <span style="font-size:13px; color:var(--text-muted); font-weight:normal;">/ mes</span></div>
+                        <ul class="price-features">
+                            <li>Hasta 50 consultas HS al mes</li>
+                            <li>Auditoría básica de facturas</li>
+                            <li>Soporte estándar por email</li>
+                            <li>Exportación a informe TXT</li>
+                        </ul>
+                    </div>
+                    <button onclick="pagarStripe()" class="btn-stripe" style="margin:0;">Contratar Plan Básico</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div>
+                        <div class="price-title">Plan Enterprise Global</div>
+                        <div class="price-amount">99€ <span style="font-size:13px; color:var(--text-muted); font-weight:normal;">/ mes</span></div>
+                        <ul class="price-features">
+                            <li>Consultas y auditorías ilimitadas</li>
+                            <li>Visión IA avanzada (Packing lists masivos)</li>
+                            <li>Cálculo preciso de Landed Cost & Aranceles</li>
+                            <li>Soporte prioritario y Account Manager</li>
+                        </ul>
+                    </div>
+                    <button onclick="pagarStripe()" class="btn-stripe" style="margin:0; background:var(--primary);">Contratar Enterprise</button>
+                </div>
+            </div>
+        </div>
+
         <!-- SECCIÓN 3: HISTORIAL DB -->
         <div id="sec-historial" class="card tab-content">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -433,6 +527,7 @@
             const titulos = {
                 'sec-documentos': 'Document Upload',
                 'sec-clasificador': 'Dashboard & Classification',
+                'sec-precios': 'Enterprise Pricing & Plans',
                 'sec-historial': 'Export & History'
             };
             document.getElementById('page-title').innerText = titulos[secId] || 'Panel Enterprise';

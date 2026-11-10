@@ -1,16 +1,16 @@
-import os
 from fastapi import FastAPI, Form
+from fastapi.responses import HTMLResponse
 from openai import OpenAI
+import os
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def leer_index():
     return open("index.html", "r", encoding="utf-8").read()
 
 @app.post("/clasificar-hs")
 def clasificar(descripcion: str = Form(...)):
-    # El cliente se inicializa aquí para evitar que la aplicación falle al arrancar
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
     
     respuesta = client.chat.completions.create(

@@ -81,31 +81,29 @@
             font-size: 14px;
             color: #334155;
         }
-<div class="form-group">
-    <label for="pais">País de Destino (Importación):</label>
-    <select id="pais" style="width: 100%; padding: 14px; border: 2px solid var(--border-color); border-radius: 12px; font-size: 15px; background: #f8fafc; margin-bottom: 16px;">
-        <option value="España / UE">España / Unión Europea</option>
-        <option value="México">México</option>
-        <option value="Estados Unidos">Estados Unidos</option>
-        <option value="Colombia">Colombia</option>
-        <option value="Argentina">Argentina</option>
-    </select>
-</div>
-        textarea {
+
+        select, textarea {
             width: 100%;
-            height: 130px;
-            padding: 16px;
+            padding: 14px;
             border: 2px solid var(--border-color);
             border-radius: 12px;
             font-size: 15px;
             font-family: inherit;
-            resize: vertical;
             box-sizing: border-box;
             background: #f8fafc;
             transition: all 0.2s ease;
         }
 
-        textarea:focus {
+        select {
+            cursor: pointer;
+        }
+
+        textarea {
+            height: 130px;
+            resize: vertical;
+        }
+
+        select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             background: #ffffff;
@@ -148,6 +146,17 @@
             white-space: pre-wrap;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
+
+        #btnDescargar {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+            display: none;
+            margin-top: 14px;
+        }
+
+        #btnDescargar:hover {
+            box-shadow: 0 6px 16px rgba(5, 150, 105, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -159,6 +168,17 @@
         </div>
         
         <div class="form-group">
+            <label for="pais">País de Destino (Importación):</label>
+            <select id="pais">
+                <option value="España / UE">España / Unión Europea</option>
+                <option value="México">México</option>
+                <option value="Estados Unidos">Estados Unidos</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Argentina">Argentina</option>
+            </select>
+        </div>
+
+        <div class="form-group">
             <label for="desc">Descripción detallada del producto:</label>
             <textarea id="desc" placeholder="Ej: Zapatos de cuero con suela de goma para trekking, impermeables..."></textarea>
         </div>
@@ -166,24 +186,33 @@
         <button onclick="clasificar()">Analizar y Validar Código HS</button>
         
         <div id="resultado"></div>
+        <button id="btnDescargar" onclick="descargarInforme()">📥 Descargar Informe Oficial (TXT)</button>
     </div>
 
     <script>
+        let ultimoResultado = "";
+        let ultimaDescripcion = "";
+        let ultimoPais = "";
+
         async function clasificar() {
-            const descripcion = document.getElementById('desc').value;
+            ultimaDescripcion = document.getElementById('desc').value;
+            ultimoPais = document.getElementById('pais').value;
             const resDiv = document.getElementById('resultado');
+            const btnDescargar = document.getElementById('btnDescargar');
             
-            if (!descripcion.trim()) {
+            if (!ultimaDescripcion.trim()) {
                 alert('Por favor, escribe una descripción del producto.');
                 return;
             }
 
             resDiv.style.display = 'block';
             resDiv.innerText = 'Analizando especificaciones y consultando base arancelaria... ⏳';
+            btnDescargar.style.display = 'none';
 
             try {
                 const formData = new FormData();
-                formData.append('descripcion', descripcion);
+                formData.append('descripcion', ultimaDescripcion);
+                formData.append('pais', ultimoPais);
 
                 const response = await fetch('/clasificar-hs', {
                     method: 'POST',
@@ -191,10 +220,33 @@
                 });
 
                 const data = await response.json();
-                resDiv.innerText = data.resultado;
+                ultimoResultado = data.resultado;
+                resDiv.innerText = ultimoResultado;
+                btnDescargar.style.display = 'block';
             } catch (error) {
                 resDiv.innerText = 'Hubo un error al procesar la solicitud con el servidor.';
             }
+        }
+
+        async function descargarInforme() {
+            const formData = new FormData();
+            formData.append('descripcion', ultimaDescripcion);
+            formData.append('pais', ultimoPais);
+            formData.append('resultado', ultimoResultado);
+
+            const response = await fetch('/exportar-txt', {
+                method: 'POST',
+                body: formData
+            });
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "informe_docusync.txt";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
         }
     </script>
 </body>

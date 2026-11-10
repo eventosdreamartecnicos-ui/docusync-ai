@@ -11,13 +11,15 @@ def leer_index():
 
 @app.post("/clasificar-hs")
 def clasificar(descripcion: str = Form(...)):
-    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-    
-    respuesta = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Eres un agente de aduanas experto. Devuelve el código HS de 6 dígitos, arancel estimado y normativas clave en formato claro."},
-            {"role": "user", "content": f"Clasifica este producto: {descripcion}"}
-        ]
-    )
-    return {"resultado": respuesta.choices[0].message.content}
+    try:
+        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        respuesta = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Eres un agente de aduanas experto. Devuelve el código HS de 6 dígitos, arancel estimado y normativas clave en formato claro."},
+                {"role": "user", "content": f"Clasifica este producto: {descripcion}"}
+            ]
+        )
+        return {"resultado": respuesta.choices[0].message.content}
+    except Exception as e:
+        return {"resultado": f"Error detallado del servidor: {str(e)}"}

@@ -21,3 +21,24 @@ def clasificar(descripcion: str = Form(...)):
         ]
     )
     return {"resultado": respuesta.choices[0].message.content}
+from fastapi.responses import PlainTextResponse
+
+@app.post("/exportar-txt")
+def exportar_txt(descripcion: str = Form(...), resultado: str = Form(...)):
+    contenido = (
+        "========================================\n"
+        "          DOCUSYNC AI - INFORME ADUANERO\n"
+        "========================================\n\n"
+        f"Descripción del producto:\n{descripcion}\n\n"
+        "----------------------------------------\n"
+        "RESULTADO DE CLASIFICACIÓN E IA:\n"
+        "----------------------------------------\n"
+        f"{resultado}\n\n"
+        "========================================\n"
+        "Informe generado automáticamente por DocuSync AI\n"
+    )
+    return PlainTextResponse(
+        content=contenido,
+        media_type="text/plain",
+        headers={"Content-Disposition": "attachment; filename=informe_aduanero.txt"}
+    )

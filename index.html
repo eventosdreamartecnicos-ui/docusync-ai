@@ -133,6 +133,16 @@
             transform: translateY(0);
         }
 
+        .btn-stripe {
+            background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%) !important;
+            box-shadow: 0 4px 12px rgba(99, 91, 255, 0.4) !important;
+            margin-bottom: 24px;
+        }
+
+        .btn-stripe:hover {
+            box-shadow: 0 6px 16px rgba(99, 91, 255, 0.5) !important;
+        }
+
         #resultado {
             margin-top: 28px;
             padding: 24px;
@@ -167,6 +177,9 @@
             <p class="subtitle">Clasificación automática de códigos arancelarios mediante IA</p>
         </div>
         
+        <!-- Botón de Pago con Stripe visible encima del selector -->
+        <button class="btn-stripe" onclick="pagarStripe()">💳 Pagar 5€ con Stripe</button>
+
         <div class="form-group">
             <label for="pais">País de Destino (Importación):</label>
             <select id="pais">
@@ -200,6 +213,20 @@
         let ultimoResultado = "";
         let ultimaDescripcion = "";
         let ultimoPais = "";
+
+        async function pagarStripe() {
+            try {
+                const response = await fetch('/crear-sesion-pago', { method: 'POST' });
+                const data = await response.json();
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert('Error al conectar con la pasarela de pagos.');
+                }
+            } catch (error) {
+                alert('Hubo un error al procesar el pago.');
+            }
+        }
 
         async function clasificar() {
             ultimaDescripcion = document.getElementById('desc').value;
